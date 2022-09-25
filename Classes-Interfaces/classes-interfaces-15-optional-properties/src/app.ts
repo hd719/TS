@@ -30,9 +30,9 @@ class Person implements Greetable {
 
   greet(phrase: string) {
     if (this.name) {
-      console.log(phrase + ' ' + this.name);
+      console.log(phrase + " " + this.name);
     } else {
-      console.log('Hi!');
+      console.log("Hi!");
     }
   }
 }
@@ -42,5 +42,5 @@ let user1: Greetable;
 user1 = new Person();
 // user1.name = 'Manu';
 
-user1.greet('Hi there - I am');
+user1.greet("Hi there - I am");
 console.log(user1);

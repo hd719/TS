@@ -14,6 +14,9 @@ let number1: number;
 number1 = 5;
 const number2 = 2.8;
 const printResult = true;
-let resultPhrase = 'Result is: ';
+let resultPhrase = "Result is: ";
 
 add(number1, number2, printResult, resultPhrase);
+
+// Tuple: fixed - array with a fixed number of elements. Ex. [number, string] -> Has to be in this order and length preserved
+// Array: flexible - array (can be any length) Ex. string[] or number[] -> Can be in any order
