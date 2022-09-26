@@ -43,6 +43,9 @@ interface Todo {
   text: string;
 }
 
+interface IntrinsicAttributes {
+  setValue: () => void;
+}
 type ActionType =
   | { type: "ADD"; text: string }
   | { type: "REMOVE"; id: number };
@@ -62,8 +65,20 @@ function App() {
       });
   }, []);
 
-  // 1st argument in useReducer is the reducer function and 2nd argument is the initial state
+  const useNumber = (initialValue: number) => useState<number>(initialValue);
 
+  // These return types in an array
+  type UseNumberValue = ReturnType<typeof useNumber>[0];
+  type UseNumberSetValue = ReturnType<typeof useNumber>[1];
+
+  const Incrementer: React.FunctionComponent<{
+    value: UseNumberValue;
+    setValue: UseNumberSetValue;
+  }> = ({ value, setValue }) => (
+    <button onClick={() => setValue(value + 1)}>Add</button>
+  );
+
+  // 1st argument in useReducer is the reducer function and 2nd argument is the initial state
   const [todos, dispatch] = useReducer((state: Todo[], action: ActionType) => {
     switch (action.type) {
       case "ADD":
@@ -84,6 +99,9 @@ function App() {
 
   const newTodoRef = useRef<HTMLInputElement>(null);
 
+  // Custom hook
+  const [value, setValue] = useNumber(0);
+
   // Wrapping handlers in useCallback keeps the reference the same
   const onAddTodo = useCallback(() => {
     if (newTodoRef.current) {
@@ -102,6 +120,7 @@ function App() {
       <List items={["one", "two", "three"]} onClick={onListClick} />
       <Box>{JSON.stringify(payload)}</Box>
 
+      <Incrementer value={value} setValue={setValue} />
       <Heading title="Todos" />
       {todos.map((todo) => (
         <div key={todo.id}>
