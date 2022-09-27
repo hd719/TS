@@ -1,5 +1,3 @@
-// useContext TS Tutorial
-
 import React, { useCallback, useRef, useState } from "react";
 import { useTodos } from "./useTodos";
 import "./App.css";
