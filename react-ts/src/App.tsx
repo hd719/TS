@@ -1,7 +1,7 @@
-// useContext TS Tutorial
+//  Global State
 
-import React, { useCallback, useRef, useState, useContext } from "react";
-import { TodosProvider, TodoContext } from "./useTodos";
+import React, { useCallback, useRef } from "react";
+import { useTodos } from "./useTodos";
 import "./App.css";
 
 const Heading = ({ title }: { title: string }) => <h2>{title}</h2>;
@@ -27,23 +27,18 @@ const Button: React.FunctionComponent<
   </button>
 );
 
-// Creating custom component with generics
 function UL<T>({
   items,
   render,
   itemClick,
-  children,
-}: {
+}: React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLUListElement>,
+  HTMLUListElement
+> & {
   items: T[];
-  render: (item: T) => React.ReactNode; // In this generic component we are ADDING DETAILED HTML PROPS (gives us the ability to pass class names)
+  render: (item: T) => React.ReactNode;
   itemClick: (item: T) => void;
-} & React.PropsWithChildren<
-  // ABILITY TO ADD CHILDREN
-  React.DetailedHTMLProps<
-    React.HTMLAttributes<HTMLUListElement>,
-    HTMLUListElement
-  >
->) {
+}) {
   return (
     <ul>
       {items.map((item, index) => (
@@ -55,39 +50,28 @@ function UL<T>({
   );
 }
 
+const initialTodos = [{ id: 0, text: "Hey there", done: false }];
+
 function App() {
-  const initialState = [{ id: 0, text: "Hey there", done: false }];
-  // const { todos, addTodo, removeTodo } = useTodos(initialState);
-  const { todos, addTodo, removeTodo } = useContext(TodoContext);
+  const { todos, addTodo, removeTodo } = useTodos(initialTodos);
+
   const newTodoRef = useRef<HTMLInputElement>(null);
 
-  // Note: Trying input in another way
-  const [todoValue, setTodoValue] = useState<string>("");
-
-  // The onAddTodo function changes NEVER changes! Using the useCallback hook the reference to that function will stay the same even after the component has rendered and rerendered!!
-  // Because the addTodo never changes the function onAddTodo will have referenced only once
   const onAddTodo = useCallback(() => {
     if (newTodoRef.current) {
       addTodo(newTodoRef.current.value);
       newTodoRef.current.value = "";
     }
-    // if (todoValue) {
-    //   console.log("todoValue:", todoValue);
-    //   addTodo(todoValue);
-    //   setTodoValue("");
-    // }
   }, [addTodo]);
 
   return (
     <div>
       <Heading title="Introduction" />
-      {/* <Box>Hello there</Box> */}
 
       <Heading title="Todos" />
       <UL
-        itemClick={(item) => alert(item.id)}
-        className=""
         items={todos}
+        itemClick={(item) => alert(item.id)}
         render={(todo) => (
           <>
             {todo.text}
@@ -97,28 +81,33 @@ function App() {
       />
       <div>
         <input type="text" ref={newTodoRef} />
-        {/* <input
-          type="text"
-          value={todoValue}
-          onChange={(e) => setTodoValue(e.target.value)}
-        /> */}
         <Button onClick={onAddTodo}>Add Todo</Button>
       </div>
     </div>
   );
 }
 
-const AppWrapper = () => {
+const JustTheTodos = () => {
+  const { todos } = useTodos(initialTodos);
   return (
-    <TodosProvider
-      initialTodos={[{ id: 0, text: "Hey there use context", done: false }]}
-    >
-      <div style={{ display: "grid", gridTemplateColumns: "50%, 50%" }}>
-        <App />
-        <App />
-      </div>
-    </TodosProvider>
+    <UL
+      items={todos}
+      itemClick={() => {}}
+      render={(todo) => <>{todo.text}</>}
+    />
   );
 };
+
+const AppWrapper = () => (
+  <div
+    style={{
+      display: "grid",
+      gridTemplateColumns: "50% 50%",
+    }}
+  >
+    <App />
+    <JustTheTodos />
+  </div>
+);
 
 export default AppWrapper;
