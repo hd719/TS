@@ -76,6 +76,7 @@ function App() {
       });
   }, []);
 
+  // Custom hook
   const useNumber = (initialValue: number) => useState<number>(initialValue);
 
   // These return types in an array
@@ -89,7 +90,8 @@ function App() {
     <button onClick={() => setValue(value + 1)}>Add</button>
   );
 
-  // 1st argument in useReducer is the reducer function and 2nd argument is the initial state
+  // useReducer takes initial state and action type
+  // Usually preferable to useState when you have complex state logic that involves multiple sub-values or when the next state depends on the previous one.
   const [todos, dispatch] = useReducer((state: Todo[], action: ActionType) => {
     switch (action.type) {
       case "ADD":

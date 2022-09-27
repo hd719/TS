@@ -1,6 +1,8 @@
 // NOTE: not TS does not doing typechecking at runtime only on compile time
 // Remember optionals go at the end for parameters!
 
+// TYPES: string · Number · boolean · array · tuple · enum · unknown · any.
+
 // 1. Types vs Interfaces (extensions)
 
 // interface Animal { // THESE ARE MOSTLY USED
@@ -58,3 +60,32 @@ const data: Record<number, string> = {
 };
 
 data[30] = "Hamel";
+
+// reduce
+// first argument is the accumulator (previous value) and second argument is the current value
+// const sum = myValues.reduce((a, b) => a + b, 0); // 0 is the initial value
+
+// const mapById = (users: MyUser[]): Record<MyUser["id"], MyUser> => {
+//   return users.reduce((a, v) => {
+//    const {id, ...rest} = v;
+//     return {
+//       ...a,
+//       [v.id]: rest,
+//     };
+//   }, {});
+// };
+
+// console.log(mapById([{ id: "foo", name: "mr.foo" }]));
+
+// {
+//   foo: {id: "foo", name: "mr.foo"}
+// }
+
+// {
+//   foo: {name: "mr.foo"}
+// }
+
+// const arr = [{ id: 1, name: "hamel" }];
+// const mappedById: Record<number, string>[] = arr.map((item) => {
+//   return { [item.id]: item.name };
+// });
