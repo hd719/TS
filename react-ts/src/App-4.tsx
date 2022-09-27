@@ -1,9 +1,8 @@
-// Redux Tool Kit
+//  Global State
 
 import React, { useCallback, useRef } from "react";
+import { useTodos } from "./useTodos-3";
 import "./App.css";
-import { Provider, useSelector, useDispatch } from "react-redux";
-import store, { selectTodos, addTodo, removeTodo } from "./store";
 
 const Heading = ({ title }: { title: string }) => <h2>{title}</h2>;
 
@@ -51,16 +50,16 @@ function UL<T>({
   );
 }
 
+const initialTodos = [{ id: 0, text: "Hey there", done: false }];
+
 function App() {
-  const todos = useSelector(selectTodos);
-  const dispatch = useDispatch();
+  const { todos, addTodo, removeTodo } = useTodos(initialTodos);
 
   const newTodoRef = useRef<HTMLInputElement>(null);
 
   const onAddTodo = useCallback(() => {
     if (newTodoRef.current) {
-      // addTodo(newTodoRef.current.value);
-      dispatch(addTodo(newTodoRef.current.value));
+      addTodo(newTodoRef.current.value);
       newTodoRef.current.value = "";
     }
   }, [addTodo]);
@@ -68,6 +67,7 @@ function App() {
   return (
     <div>
       <Heading title="Introduction" />
+
       <Heading title="Todos" />
       <UL
         items={todos}
@@ -75,9 +75,7 @@ function App() {
         render={(todo) => (
           <>
             {todo.text}
-            <button onClick={() => dispatch(removeTodo(todo.id))}>
-              Remove
-            </button>
+            <button onClick={() => removeTodo(todo.id)}>Remove</button>
           </>
         )}
       />
@@ -90,8 +88,7 @@ function App() {
 }
 
 const JustTheTodos = () => {
-  const todos = useSelector(selectTodos);
-
+  const { todos } = useTodos(initialTodos);
   return (
     <UL
       items={todos}
@@ -102,10 +99,15 @@ const JustTheTodos = () => {
 };
 
 const AppWrapper = () => (
-  <Provider store={store}>
+  <div
+    style={{
+      display: "grid",
+      gridTemplateColumns: "50% 50%",
+    }}
+  >
     <App />
     <JustTheTodos />
-  </Provider>
+  </div>
 );
 
 export default AppWrapper;
