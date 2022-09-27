@@ -1,7 +1,7 @@
 // useContext TS Tutorial
 
-import React, { useCallback, useRef, useState } from "react";
-import { useTodos } from "./useTodos";
+import React, { useCallback, useRef, useState, useContext } from "react";
+import { TodosProvider, TodoContext } from "./useTodos";
 import "./App.css";
 
 const Heading = ({ title }: { title: string }) => <h2>{title}</h2>;
@@ -57,9 +57,11 @@ function UL<T>({
 
 function App() {
   const initialState = [{ id: 0, text: "Hey there", done: false }];
-  const { todos, addTodo, removeTodo } = useTodos(initialState);
+  // const { todos, addTodo, removeTodo } = useTodos(initialState);
+  const { todos, addTodo, removeTodo } = useContext(TodoContext);
   const newTodoRef = useRef<HTMLInputElement>(null);
 
+  // Note: Trying input in another way
   const [todoValue, setTodoValue] = useState<string>("");
 
   // The onAddTodo function changes NEVER changes! Using the useCallback hook the reference to that function will stay the same even after the component has rendered and rerendered!!
@@ -106,4 +108,17 @@ function App() {
   );
 }
 
-export default App;
+const AppWrapper = () => {
+  return (
+    <TodosProvider
+      initialTodos={[{ id: 0, text: "Hey there use context", done: false }]}
+    >
+      <div style={{ display: "grid", gridTemplateColumns: "50%, 50%" }}>
+        <App />
+        <App />
+      </div>
+    </TodosProvider>
+  );
+};
+
+export default AppWrapper;
