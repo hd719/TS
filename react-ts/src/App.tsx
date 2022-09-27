@@ -58,7 +58,7 @@ type ActionType =
 //     title?: string;
 //   }
 // > = ({ children, ...rest }: { children: React.ReactNode }) => {
-//   <button {...rest}> {children}</button>;
+//   <button {...rest}>{children}</button>;
 // };
 
 function App() {
