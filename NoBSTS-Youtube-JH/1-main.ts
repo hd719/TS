@@ -61,7 +61,7 @@ const data: Record<number, string> = {
 
 data[30] = "Hamel";
 
-// reduce
+// 4. reduce
 // first argument is the accumulator (previous value) and second argument is the current value
 // const sum = myValues.reduce((a, b) => a + b, 0); // 0 is the initial value
 
@@ -89,3 +89,26 @@ data[30] = "Hamel";
 // const mappedById: Record<number, string>[] = arr.map((item) => {
 //   return { [item.id]: item.name };
 // });
+
+// 5. Extends vs Implement
+// Classes implement interfaces. Classes extend classes. Interfaces extend interfaces.
+
+// abstract class A {}
+
+// class B extends A {}
+
+// class C implements A {}
+
+// console.log(new B() instanceof A) // true
+// console.log(new C() instanceof A) // false
+
+// 6. In Keyword
+// A common task is to take an existing type and make each of its properties optional:
+interface Person {
+  name: string;
+  age: number;
+}
+type CreatePersonPartial<T> = {
+  [P in keyof T]?: T[P]; // P will be each key of T
+};
+type PersonPartial = CreatePersonPartial<Person>;
