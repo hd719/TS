@@ -112,3 +112,8 @@ type CreatePersonPartial<T> = {
   [P in keyof T]?: T[P]; // P will be each key of T
 };
 type PersonPartial = CreatePersonPartial<Person>;
+
+// 7 New features in React 18
+// Strict mode: identify when the component is unmounting and mounting (Life Cycle events)
+// Ensuring reusable state, detecting unexpected side effects
+// However you have some crazy side effect move out of useEffect and put it in some sort of state manager
