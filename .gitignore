@@ -1,6 +1,7 @@
 .DS_Store
 NoBSTS-Youtube-JH/node_modules
 react-ts/node_modules
+react-ts-hooks/node_modules
 TS-Lib-Setup/ts-library/node_modules
 TS-Lib-Setup/js-consumer/node_modules
 TS-Lib-Setup/ts-consumer/node_modules
