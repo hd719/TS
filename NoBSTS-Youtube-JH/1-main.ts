@@ -135,3 +135,8 @@ promise.then((data) => {
 // function merge<T extends object, U extends object>(objA: T, objB: U) {
 //   return Object.assign(objA, objB);
 // }
+
+// 10 Protected vs Private
+
+// Private methods/members are accessible only from inside the class.
+// Protected methods/members are accessible from inside the class and extending class as well.

@@ -85,3 +85,9 @@ useEffect(() => {
 
 - useCallback() is used to memoize a function, want retain the referential identity of the function across renders, useful when passing the function to a child component that relies on referential identity to determine if it should re-render
 - useMemo() is used to memoize a value, useful when you want to avoid expensive calculations on every render
+
+## Javascript
+
+Closures: a function that references variables in the outer scope from its inner scope
+
+- has access to the parent scope, even after the parent function has closed
