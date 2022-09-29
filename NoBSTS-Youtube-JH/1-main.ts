@@ -117,3 +117,21 @@ type PersonPartial = CreatePersonPartial<Person>;
 // Strict mode: identify when the component is unmounting and mounting (Life Cycle events)
 // Ensuring reusable state, detecting unexpected side effects
 // However you have some crazy side effect move out of useEffect and put it in some sort of state manager
+
+// 8. Promises
+
+const promise: Promise<number> = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve(10);
+  }, 2000);
+});
+
+promise.then((data) => {
+  // data.split(' ');
+});
+
+// 9. Merge Objects
+
+// function merge<T extends object, U extends object>(objA: T, objB: U) {
+//   return Object.assign(objA, objB);
+// }

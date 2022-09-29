@@ -18,7 +18,7 @@ function returnLastValue<T>(arr: T[]): T {
 returnLastValue([1, 2, 3]);
 returnLastValue(["hi", "hello", "hi"]);
 
-function returnLengthOfArray<T>(arr: T[]): number {
+function returnLengthOfArray<T>(arr: T[]) {
   return arr.length;
 }
 
